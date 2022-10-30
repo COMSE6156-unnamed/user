@@ -61,7 +61,5 @@ def user_login():
             data = {"err_msg": "username or password is incorrect."}
             return data
 
-  
-  
-
-app.run(port= 8080)
+if __name__ == "__main__":
+    app.run(port= 8080)
