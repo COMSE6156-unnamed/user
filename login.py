@@ -1,24 +1,29 @@
 from flask import Flask, render_template, request, jsonify, session, redirect
+
 import pymysql
 
 
 db_settings = {
     "host": "127.0.0.1",
     "port": 3306,
-    "user": "{DB_USERNAME}",
-    "password": "{DB_PASSWORD}",
-    "db": "{DB_NAME}",
+    "user": "root",
+    "password": "YUII0888",
+    "db": "user_db",
     "charset": "utf8"
 }
 
 try:
     conn = pymysql.connect(**db_settings)
     cur = conn.cursor()
-except Exception as e:
-    print(e)
+except Exception as ex:
+    print(ex)
 
 
 app = Flask(__name__)
+
+
+def check_user_login():
+    return session.get('user_id')
 
 @app.route("/")
 def hello():
@@ -33,11 +38,31 @@ def user_register():
         password = json["password"]     
      
         sequence = (user_id, user_name, password)
-        print(sequence)
+        # print(sequence)
         formula = "INSERT INTO user_db.user_info(user_id, user_name, password) VALUES (%s, %s, %s);"
         cur.execute(formula, sequence)
         conn.commit()
         return str(sequence) + "Done!"
-        
+
+@app.route('/user/login', methods = ["GET", "POST"])
+def user_login():
+    if request.method == "POST":
+        json = request.get_json()
+        user_id = json["user_id"]
+        password = json["password"]
+        sequence = (user_id, password)
+        formula = "SELECT user_id FROM user_db.user_info WHERE user_id = %s AND password = %s;"
+        cur.execute(formula, sequence)
+        id_list = cur.fetchall()
+    
+      
+        if id_list:
+            return "success!"
+        else:
+            data = {"err_msg": "帳號或密碼錯誤"}
+            return data
+
+  
+  
 
 app.run(port= 8080)
