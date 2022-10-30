@@ -1,13 +1,12 @@
 from flask import Flask, render_template, request, jsonify, session, redirect
-
 import pymysql
 
 
 db_settings = {
     "host": "127.0.0.1",
     "port": 3306,
-    "user": "root",
-    "password": "YUII0888",
+    "user": "{DB_USER}",
+    "password": "{DB_PASSWORD}",
     "db": "user_db",
     "charset": "utf8"
 }
@@ -38,7 +37,7 @@ def user_register():
         password = json["password"]     
      
         sequence = (user_id, user_name, password)
-        # print(sequence)
+
         formula = "INSERT INTO user_db.user_info(user_id, user_name, password) VALUES (%s, %s, %s);"
         cur.execute(formula, sequence)
         conn.commit()
@@ -59,7 +58,7 @@ def user_login():
         if id_list:
             return "success!"
         else:
-            data = {"err_msg": "帳號或密碼錯誤"}
+            data = {"err_msg": "username or password is incorrect."}
             return data
 
   
