@@ -3,7 +3,8 @@ import pymysql
 
 
 db_settings = {
-    "host": "127.0.0.1",
+    # "host": "127.0.0.1",
+    "host": "e6156.clg4hkuxiisg.us-east-2.rds.amazonaws.com",
     "port": 3306,
     "user": "{DB_USER}",
     "password": "{DB_PASSWORD}",
