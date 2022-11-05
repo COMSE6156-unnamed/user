@@ -1,26 +1,31 @@
 from flask import Flask, render_template, request, jsonify, session, redirect
 import pymysql
+import config
+from utils.exts import db
 
 
-db_settings = {
-    # "host": "127.0.0.1",
-    "host": "e6156.clg4hkuxiisg.us-east-2.rds.amazonaws.com",
-    "port": 3306,
-    "user": "{DB_USER}",
-    "password": "{DB_PASSWORD}",
-    "db": "user_db",
-    "charset": "utf8"
-}
+# db_settings = {
+#     # "host": "127.0.0.1",
+#     "host": "e6156.clg4hkuxiisg.us-east-2.rds.amazonaws.com",
+#     "port": 3306,
+#     "user": "{DB_USER}",
+#     "password": "{DB_PASSWORD}",
+#     "db": "user_db",
+#     "charset": "utf8"
+# }
 
-try:
-    conn = pymysql.connect(**db_settings)
-    cur = conn.cursor()
-except Exception as ex:
-    print(ex)
+# try:
+#     conn = pymysql.connect(**db_settings)
+#     cur = conn.cursor()
+# except Exception as ex:
+#     print(ex)
 
 
 app = Flask(__name__)
+app.config.from_object(config)
 
+db.init_app(app)
+migrate = Migr
 
 def check_user_login():
     return session.get('user_id')
