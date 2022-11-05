@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, session, redirect
 import pymysql
 import config
+from flask_migrate import Migrate
 from utils.exts import db
 
 
@@ -25,7 +26,7 @@ app = Flask(__name__)
 app.config.from_object(config)
 
 db.init_app(app)
-migrate = Migr
+migrate = Migrate(app, db)
 
 def check_user_login():
     return session.get('user_id')
