@@ -6,6 +6,14 @@ import json
 
 bp = Blueprint("user", __name__, url_prefix="/user")
 
+@bp.route("/all", methods=["GET"])
+def get_all_users():
+    if request.method == "GET":
+        content = []
+        for user in db.session.query(User):
+            content.append(user)
+        return Response(json.dumps(content), status=200, content_type="user.json")
+
 @bp.route("/<int:user_id>", methods=["GET"])
 def get_user_by_id(user_id: int):
     if request.method == "GET":
