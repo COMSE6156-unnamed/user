@@ -1,4 +1,5 @@
 import os
+from sqlalchemy import create_engine
 
 # DB related
 HOSTNAME = 'e6156.ccgom5f9kwrf.us-east-1.rds.amazonaws.com '
@@ -11,3 +12,8 @@ SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(USERNAME, PASS
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 DEBUG = True
+
+def create_db_engine():
+    engine = create_engine(SQLALCHEMY_DATABASE_URI)
+
+    return engine
