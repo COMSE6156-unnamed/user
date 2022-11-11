@@ -12,8 +12,3 @@ SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(USERNAME, PASS
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 DEBUG = True
-
-def create_db_engine():
-    engine = create_engine(SQLALCHEMY_DATABASE_URI)
-
-    return engine
