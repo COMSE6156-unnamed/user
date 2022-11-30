@@ -13,7 +13,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 DEBUG = True
 
-def create_db_engine():
-    engine = create_engine(SQLALCHEMY_DATABASE_URI)
+# def create_db_engine():
+#     engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
-    return engine
+#     return engine
