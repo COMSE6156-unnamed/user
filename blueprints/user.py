@@ -4,18 +4,19 @@ from utils.exts import db
 from config import create_db_engine
 import json
 from sqlalchemy import text
+from utils.model import User
+from utils.format import format_user
 
 bp = Blueprint("user", __name__, url_prefix="/user")
 
 @bp.route("/all", methods=["GET"])
 def get_all_users():
     if request.method == "GET":
-        engine = create_db_engine()
-        result = ''
-        with engine.connect() as connection:
-            result = connection.execute(text("select user.user_id, user.user_name from user"))
-            result = [dict(row._mapping) for row in result]
-        return Response(json.dumps(result), status=200, content_type="user.json")
+        content = []
+        for user in db.session.query(User).all():
+            content.append(format_user(user))
+
+        return Response(json.dumps(content), status=200, content_type="user.json")
 
 @bp.route("/<int:user_id>", methods=["GET"])
 def get_user_by_id(user_id: int):
