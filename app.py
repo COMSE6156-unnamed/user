@@ -1,4 +1,4 @@
-from flask import Flask, session, jsonify
+from flask import Flask, session, jsonify, redirect
 from flask_migrate import Migrate
 from flask_dance.contrib.google import google
 import config
@@ -8,10 +8,12 @@ import utils.constants as constants
 from blueprints import user_bp, login_bp
 from blueprints.login import set_secret_key, check_registration
 from oauthlib.oauth2.rfc6749.errors import TokenExpiredError
+from flask_cors import CORS
 
 # app config
 app = Flask(__name__)
 app.config.from_object(config)
+CORS(app)
 
 # DB config
 db.init_app(app)
@@ -27,7 +29,7 @@ app.register_blueprint(login_bp, url_prefix='/login')
 def index():
     try:
         if not google.authorized:
-            return "Hello <a href='/login'><button>Login</button></a>"
+            return redirect("/login")
 
         google_data = google.get(constants.GOOGLE_USER_INFO_ENDPOINT).json()
         session[constants.GOOGLE_DATA_KEY] = google_data
@@ -39,7 +41,7 @@ def index():
     except TokenExpiredError:
         del login_bp.token
         session.clear()
-        return "Hello <a href='/login'><button>Login</button></a>"
+        return redirect("/login")
 
 @app.route("/logout")
 def logout():

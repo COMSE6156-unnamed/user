@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask_dance.contrib.google import make_google_blueprint, google
-from flask import redirect, url_for
+from flask import redirect, url_for, jsonify
 from oauthlib.oauth2.rfc6749.errors import TokenExpiredError
 from sqlalchemy import text, exc
 import pymysql
