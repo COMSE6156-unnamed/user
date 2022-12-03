@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # DB related
-HOSTNAME = 'e6156.ccgom5f9kwrf.us-east-1.rds.amazonaws.com'
-PORT = 3306
+HOSTNAME = os.environ.get("RDS_HOSTNAME")
+PORT = os.environ.get("RDS_PORT")
 USERNAME = os.environ.get("DBUSER")
 PASSWORD = os.environ.get("DBPW")
 DATABASE = 'user_db'
@@ -17,7 +17,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 DEBUG = True
 
-# def create_db_engine():
-#     engine = create_engine(SQLALCHEMY_DATABASE_URI)
+def create_db_engine():
+    engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
-#     return engine
+    return engine
