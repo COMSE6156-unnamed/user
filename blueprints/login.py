@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask_dance.contrib.google import make_google_blueprint, google
-from flask import redirect, url_for, jsonify
+from flask import redirect, url_for, jsonify, session
 from oauthlib.oauth2.rfc6749.errors import TokenExpiredError
 from sqlalchemy import text, exc
 import pymysql
@@ -23,7 +23,9 @@ bp = make_google_blueprint(
     client_secret=client_secret,
     reprompt_consent=True,
     scope=[constants.BLUE_PRINT_SCOPE_PROFILE,
-        constants.BLUE_PRINT_SCOPE_EMAIL]
+        constants.BLUE_PRINT_SCOPE_EMAIL],
+    redirect_url="http://127.0.0.1:8080",
+    redirect_to="http://127.0.0.1:5000"
 )
 
 def set_secret_key(app):

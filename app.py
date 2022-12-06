@@ -36,7 +36,7 @@ def index():
         engine = create_db_engine()
         check_registration(engine=engine, data=google_data)
 
-        return jsonify(session[constants.GOOGLE_DATA_KEY])
+        return jsonify(session[constants.GOOGLE_DATA_KEY]).set_cookie('email', google_data[constants.GOOGLE_EMAIL_KEY])
 
     except TokenExpiredError:
         del login_bp.token
@@ -55,14 +55,16 @@ def logout():
             )
             del login_bp.token
             session.clear()
-            return jsonify({"message": "success"})
-
+            # return jsonify({"message": "success"})
+            return redirect("http://127.0.0.1:8080")
         except TokenExpiredError:
             del login_bp.token
             session.clear()
-            return jsonify({"message": "success"})
+            # return jsonify({"message": "success"})
+            return redirect("http://127.0.0.1:8080")
         
-    return jsonify({"message": "success"})
+    # return jsonify({"message": "success"})
+    return redirect("http://127.0.0.1:8080")
     
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port= 5000)
