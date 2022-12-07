@@ -169,6 +169,12 @@ def profile():
     res = redirect(FRONTEND_ENDPOINT + "/profile")
     return res
 
+@app.route("/quiz")
+@login_required
+def quiz():
+    res = redirect(FRONTEND_ENDPOINT + "/quiz")
+    return res
+
 def get_google_provider_cfg():
     return requests.get(GOOGLE_DISCOVERY_URL).json()
 
