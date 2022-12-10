@@ -15,8 +15,6 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(USERNAME, PASSWORD, HOSTNAME, PORT, DATABASE)
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-DEBUG = True
-
 def create_db_engine():
     engine = create_engine(SQLALCHEMY_DATABASE_URI)
     return engine

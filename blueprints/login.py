@@ -1,5 +1,5 @@
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask import redirect, url_for, jsonify
 from oauthlib.oauth2.rfc6749.errors import TokenExpiredError
@@ -10,7 +10,7 @@ from utils.model import User
 import utils.constants as constants
 
 # load environment variables from .env
-load_dotenv()
+load_dotenv(find_dotenv())
 
 # google oauth credentials & settings
 client_id = os.getenv(constants.GOOGLE_CLIENT_ID_KEY)
