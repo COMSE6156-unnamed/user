@@ -35,7 +35,7 @@ GOOGLE_DISCOVERY_URL = (
 
 # frontend config
 FRONTEND_ENDPOINT = os.environ.get(constants.FRONTEND_ENDPOINT_KEY)
-
+FRONTEND_DOMAIN = os.environ.get("FRONTEND_DOMAIN")
 # app config
 app = Flask(__name__)
 app.config.from_object(config)
@@ -74,7 +74,7 @@ def index():
             "<div><p>Google Profile Picture:</p>"
             '<img src="{}" alt="Google profile pic"></img></div>'
             '<a class="button" href="/logout">Logout</a>'.format(
-                current_user.name, current_user.email, current_user.profile_pic
+                current_user.user_name, current_user.user_email, current_user.picture
             )
         )
 
@@ -148,8 +148,8 @@ def callback():
 
     res = redirect(FRONTEND_ENDPOINT + "/profile")
     token = token_response.json()
-    res.set_cookie(constants.GOOGLE_ID_TOKEN_KEY, token[constants.GOOGLE_ID_TOKEN_KEY], domain=FRONTEND_ENDPOINT)
-    res.set_cookie(constants.GOOGLE_ACCESS_TOKEN_KEY, token[constants.GOOGLE_ACCESS_TOKEN_KEY], domain=FRONTEND_ENDPOINT)
+    res.set_cookie(constants.GOOGLE_ID_TOKEN_KEY, token[constants.GOOGLE_ID_TOKEN_KEY], domain=FRONTEND_DOMAIN)
+    res.set_cookie(constants.GOOGLE_ACCESS_TOKEN_KEY, token[constants.GOOGLE_ACCESS_TOKEN_KEY], domain=FRONTEND_DOMAIN)
     return res
 
 
@@ -159,8 +159,8 @@ def logout():
     logout_user()
     session.clear()
     res = redirect(FRONTEND_ENDPOINT)
-    res.delete_cookie(constants.GOOGLE_ID_TOKEN_KEY)
-    res.delete_cookie(constants.GOOGLE_ACCESS_TOKEN_KEY)
+    res.delete_cookie(constants.GOOGLE_ID_TOKEN_KEY, domain=FRONTEND_DOMAIN)
+    res.delete_cookie(constants.GOOGLE_ACCESS_TOKEN_KEY, domain=FRONTEND_DOMAIN)
     return res
 
 @app.route("/profile")
