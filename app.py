@@ -148,8 +148,8 @@ def callback():
 
     res = redirect(FRONTEND_ENDPOINT + "/profile")
     token = token_response.json()
-    res.set_cookie(constants.GOOGLE_ID_TOKEN_KEY, token[constants.GOOGLE_ID_TOKEN_KEY])
-    res.set_cookie(constants.GOOGLE_ACCESS_TOKEN_KEY, token[constants.GOOGLE_ACCESS_TOKEN_KEY])
+    res.set_cookie(constants.GOOGLE_ID_TOKEN_KEY, token[constants.GOOGLE_ID_TOKEN_KEY], domain=FRONTEND_ENDPOINT)
+    res.set_cookie(constants.GOOGLE_ACCESS_TOKEN_KEY, token[constants.GOOGLE_ACCESS_TOKEN_KEY], domain=FRONTEND_ENDPOINT)
     return res
 
 
