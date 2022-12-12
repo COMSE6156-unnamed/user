@@ -55,7 +55,7 @@ login_manager.init_app(app)
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    res = redirect(FRONTEND_ENDPOINT)
+    res = redirect(FRONTEND_ENDPOINT + '/baddog')
     return res
 # OAuth2 client setup
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
