@@ -8,9 +8,10 @@ from flask_login import UserMixin
 
 class User(db.Model, UserMixin):
     __tablename__ = "user"
-    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.String, primary_key=True)
     user_name = db.Column(db.String)
     user_email = db.Column(db.String)
+    dog_num = db.Column(db.Integer)
     picture = db.Column(db.String)
 
     def __init__(self, user_id, user_name, user_email, picture):
@@ -19,6 +20,7 @@ class User(db.Model, UserMixin):
         self.user_email = user_email
         self.picture = picture
         self.id = user_id # for flask login
+        self.dog_num = 0
 
     def get(user_id):
         engine = db_util.create_db_engine()
