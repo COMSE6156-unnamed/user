@@ -15,12 +15,21 @@ def get_all_users():
 
         return Response(json.dumps(content), status=200, content_type="user.json")
 
-@bp.route("/<int:user_id>", methods=["GET"])
-def get_user_by_id(user_id: int):
+@bp.route("/<user_id>", methods=["GET"])
+def get_user_by_id(user_id):
     if request.method == "GET":
         content = []
         for user in db.session.query(User).filter(User.user_id == user_id):
-            print(user)
             content.append(format_user(user))
 
+        return Response(json.dumps(content), status=200, content_type="user.json")
+
+@bp.route("/<user_id>/increment_dog_num", methods=["PUT"])
+def increment_user_dog_num(user_id):
+    if request.method=="PUT":
+        content = []
+        for user in db.session.query(User).filter(User.user_id == user_id):
+            user.dog_num = user.dog_num + 1
+            content.append(format_user(user))
+            db.session.commit()
         return Response(json.dumps(content), status=200, content_type="user.json")
